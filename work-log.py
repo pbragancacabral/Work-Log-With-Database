@@ -23,6 +23,7 @@ class Task(Model):
 def show_menu():
     choice = None
     while choice != "q":
+        clear()
         print("Press 'Q' to quit.")
         for key, value in menu.items():
             print(f"{key}) {value.__doc__}")
@@ -48,7 +49,37 @@ def add_task():
 
 
 def find_task():
-    """Find a task by owner, date, time or search term."""
+    """Find a task."""
+    clear()
+    for key, value in find_task_menu.items():
+        print(f"{key}) {value.__doc__}")
+
+    choice = input("Please select an option: ").lower().strip()
+    if choice in find_task_menu:
+        find_task_menu[choice]()
+
+
+def find_by_owner():
+    """Find a task by owner."""
+    clear()
+    print("Test for by owner.")
+    input("Press <return> to continue.")
+
+
+def find_by_date():
+    """Find a task by date."""
+    clear()
+    pass
+
+
+def find_by_time():
+    """Find a task by time."""
+    clear()
+    pass
+
+
+def find_by_search_term():
+    """Find a task by search term."""
     clear()
     pass
 
@@ -66,6 +97,13 @@ def initialize():
 menu = OrderedDict([
     ("a", add_task),
     ("f", find_task),
+])
+
+find_task_menu = OrderedDict([
+    ("o", find_by_owner),
+    ("d", find_by_date),
+    ("t", find_by_time),
+    ("s", find_by_search_term),
 ])
 
 if __name__ == "__main__":
