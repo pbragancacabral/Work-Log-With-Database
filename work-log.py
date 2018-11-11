@@ -13,11 +13,18 @@ class Task(Model):
     owner = CharField(max_length=255)
     date = DateTimeField(default=datetime.datetime.now)
     title = CharField(max_length=255)
-    minutes = IntegerField
+    minutes = IntegerField()
     notes = TextField(default="")
 
     class Meta:
         database = db
+
+    def __repr__(self):
+        print(self.owner)
+        print(self.date)
+        print(self.title)
+        print(self.minutes)
+        print(self.notes)
 
 
 def show_menu():
@@ -62,26 +69,37 @@ def find_task():
 def find_by_owner():
     """Find a task by owner."""
     clear()
-    print("Test for by owner.")
-    input("Press <return> to continue.")
+    search_query = input("Name of the owner: ")
+    tasks = Task.select().order_by(Task.owner)
+    tasks = tasks.where(Task.owner.contains(search_query))
+    for task in tasks:
+        print(task)
 
 
 def find_by_date():
     """Find a task by date."""
     clear()
-    pass
 
 
 def find_by_time():
     """Find a task by time."""
     clear()
-    pass
+    search_query = input("What is the time spent in minutes? ")
+    tasks = Task.select().where(Task.minutes == search_query)
+    for task in tasks:
+        print(task)
 
 
 def find_by_search_term():
     """Find a task by search term."""
     clear()
-    pass
+    search_query = input("Type a search query term: ")
+    tasks = Task.select().where(
+        Task.title.contains(search_query) |
+        Task.notes.contains(search_query)
+    )
+    for task in tasks:
+        print(task.__repr__())
 
 
 def clear():
