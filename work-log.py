@@ -73,19 +73,24 @@ def find_by_owner():
     tasks = Task.select().order_by(Task.owner)
     tasks = tasks.where(Task.owner.contains(search_query))
     for task in tasks:
-        print(task)
+        print(task.__repr__())
 
 
 def find_by_date():
     """Find a task by date."""
     clear()
+    search_query = input("Date of the task: ")
+    tasks = Task.select().order_by(Task.owner)
+    tasks = tasks.where(Task.date.contains(search_query))
+    for task in tasks:
+        print(task.__repr__())
 
 
 def find_by_time():
     """Find a task by time."""
     clear()
     search_query = input("What is the time spent in minutes? ")
-    tasks = Task.select().where(Task.minutes == search_query)
+    tasks = Task.select().where(Task.minutes.contains(search_query))
     for task in tasks:
         print(task)
 
